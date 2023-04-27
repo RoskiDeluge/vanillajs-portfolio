@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Component</title>
+    <style>
+        .weather-container {
+            display: flex;
+            flex-direction: row;
+            /* justify-content: space-between; */
+            /* align-items: baseline; */
+            padding: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="weather-container">
+        <p>Honolulu Weather</p>
+        <p id="weather-temp"></p>
+        <p id="weather-cond"></p>
+    </div>
+    <script>
+        const API_KEY = '<YOUR-API_KEY>'; // Replace with your OpenWeatherMap API key
+        const CITY_ID = 5856195; // City ID for Honolulu
+        const UNITS = 'imperial'; // Use 'metric' for Celsius or 'imperial' for Fahrenheit
+
+        async function fetchWeather() {
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?id=${CITY_ID}&appid=${API_KEY}&units=${UNITS}`);
+            const data = await response.json();
+            const temperature = data.main.temp;
+            const description = data.weather[0].description;
+            document.getElementById('weather-temp').textContent = `Temperature: ${temperature}°F`;
+            document.getElementById('weather-cond').textContent = `Condition: ${description}`;
+        }
+
+        fetchWeather();
+    </script>
+</body>
+</html>
